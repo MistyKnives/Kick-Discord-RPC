@@ -13,7 +13,7 @@ A Simple Java Program to display your Kick Livestream on your Discord Profile!
 2. After that is done, you can run the app. You can either directly run it through the main() method in the Main class or build the app to a jar and then run it through command line.
    <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/run_program.png"></img>
    </br>
-3. Once the program is running, the output should look like this
+3. Once the program is running, the output should look like this</br>
    <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/running.png"></img>
 4. Now go ahead and start your stream!
    <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/obs.png"></img>
