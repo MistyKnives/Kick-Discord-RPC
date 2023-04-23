@@ -1,0 +1,7 @@
+{
+  "username": "{YOUR_USERNAME}",
+  "displayElapsed": false,
+  "host": "OBS WEBSOCKET HOST",
+  "port": 0,
+  "password": "OBS WEBSOCKET PASSWORD"
+}
