@@ -6,14 +6,18 @@ A Simple Java Program to display your Kick Livestream on your Discord Profile!
       <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/find_websocket.png"></img>
     * Make sure you Tick "Enable WebSocket server" for this to work.
       <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/connection_info.png"></img>
-    * Replace username with your Kick Username.
-    * Replace host with the IP Address, Port and Password from the Websocket Information.
+    * Open the .jar file with your favourite ZIP/RAR editor
+    * go into the "config.json" files with a text editor and replace username, host, port, and password with the information you've got
+    * username = Your Kick username
+    * host, port, and password = From OBS Websocket</br>
+      <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/find_config.png"></img>
       <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/config.png"></img>
       </br>
-2. After that is done, you can run the app. You can either directly run it through the main() method in the Main class or build the app to a jar and then run it through command line.
+2. After that you can run the program using the following line "java -cp .\KickRPC.jar uk.co.mistyknives.kickrpc.Client"
    <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/run_program.png"></img>
    </br>
 3. Once the program is running, the output should look like this</br>
+   * the colour is broken at the moment so i'll fix it soon!
    <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/running.png"></img>
 4. Now go ahead and start your stream!
    <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/obs.png"></img>
