@@ -4,7 +4,7 @@ A Simple Java Program to display your Kick Livestream on your Discord Profile!
  * [Java](https://www.oracle.com/java/technologies/javase/jdk19-archive-downloads.html) - Version 19
  * JSON Editor - Literally Notepad will work
 # Getting Started
-1. Open the KickRPC.bat file, this will check if you have Java 19 installed and will provide a link if you don't.
+1. Open the KickRPC.bat file (Make sure KickRPC.jar is inside the same Directory), this will check if you have Java 19 installed and will provide a link if you don't.
    <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/run.png"></img>
 2. If it is your first time launching the program, these two popups will display
    * Enter your Kick username for this one
