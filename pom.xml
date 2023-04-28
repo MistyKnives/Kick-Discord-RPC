@@ -6,7 +6,7 @@
 
     <groupId>uk.co.mistyknives</groupId>
     <artifactId>KickRPC</artifactId>
-    <version>v3.0.0</version>
+    <version>v3.0.1</version>
 
     <properties>
         <maven.compiler.source>19</maven.compiler.source>
