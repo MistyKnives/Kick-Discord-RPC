@@ -2,7 +2,7 @@ package uk.co.mistyknives.kickrpc.discord;
 
 import com.jagrosh.discordipc.IPCClient;
 import com.jagrosh.discordipc.exceptions.NoDiscordClientException;
-import uk.co.mistyknives.kickrpc.Client;
+
 import uk.co.mistyknives.kickrpc.logging.Log;
 
 /**
@@ -24,7 +24,7 @@ public class DiscordClient {
 
     public void setup() {
         try {
-            ipcClient = new IPCClient(Long.parseLong(Client.getConfig().getClientID()));
+            ipcClient = new IPCClient(1099615872777195530L);
             ipcClient.setListener(new DiscordListener());
             ipcClient.connect();
         } catch (NoDiscordClientException exception) {
@@ -35,7 +35,7 @@ public class DiscordClient {
     public void clear(String message) {
         try {
             ipcClient.close();
-            ipcClient = new IPCClient(Long.parseLong(Client.getConfig().getClientID()));
+            ipcClient = new IPCClient(1099615872777195530L);
             ipcClient.connect();
 
             Log.info(message);

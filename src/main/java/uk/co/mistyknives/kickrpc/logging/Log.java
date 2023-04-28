@@ -1,10 +1,17 @@
 package uk.co.mistyknives.kickrpc.logging;
 
+import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.AnsiConsole;
 import uk.co.mistyknives.kickrpc.util.ConsoleColors;
 import uk.co.mistyknives.kickrpc.util.DateTime;
 
+import java.io.PrintStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Date;
+
+import static org.fusesource.jansi.Ansi.ansi;
 
 /**
  * Copyright MistyKnives © 2022-2023
@@ -23,11 +30,15 @@ public class Log {
 
     public static void info(String message) {
         Date date = Date.from(Instant.now());
-        System.out.println(ConsoleColors.PURPLE_BRIGHT + DateTime.formatTime(date) + " " + ConsoleColors.GREEN_BRIGHT + "[INFO] " + ConsoleColors.RESET + " » %s".formatted(message));
+        AnsiConsole.systemInstall();
+        System.out.println(ansi().render(ConsoleColors.MAGENTA_BRIGHT + DateTime.formatTime(date) + " " + ConsoleColors.GREEN + "[INFO]  " + ConsoleColors.RESET + " > %s".formatted(message)));
+        AnsiConsole.systemUninstall();
     }
 
     public static void error(String message) {
         Date date = Date.from(Instant.now());
-        System.out.println(ConsoleColors.PURPLE_BRIGHT + DateTime.formatTime(date) + " " + ConsoleColors.RED_BRIGHT + "[ERROR] " + ConsoleColors.RESET + " » %s".formatted(message));
+        AnsiConsole.systemInstall();
+        System.out.println(ansi().render(ConsoleColors.MAGENTA_BRIGHT + DateTime.formatTime(date) + " " + ConsoleColors.RED_BRIGHT + "[ERROR] " + ConsoleColors.RESET + " > %s".formatted(message)));
+        AnsiConsole.systemUninstall();
     }
 }

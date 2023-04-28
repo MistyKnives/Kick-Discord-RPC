@@ -6,7 +6,7 @@
 
     <groupId>uk.co.mistyknives</groupId>
     <artifactId>KickRPC</artifactId>
-    <version>v2.0.0</version>
+    <version>v3.0.0</version>
 
     <properties>
         <maven.compiler.source>19</maven.compiler.source>
@@ -24,18 +24,9 @@
     <dependencies>
         <dependency>
             <groupId>com.github.MistyKnives</groupId>
-            <artifactId>Kick4J</artifactId>
-            <version>39aeb73678</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.CDAGaming</groupId>
-            <artifactId>DiscordIPC</artifactId>
-            <version>49a8d35df5</version>
-        </dependency>
-        <dependency>
-            <groupId>io.obs-websocket.community</groupId>
-            <artifactId>client</artifactId>
-            <version>2.0.0</version>
+            <artifactId>kick4j</artifactId>
+            <version>84deee592d</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -44,9 +35,73 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>org.fusesource.jansi</groupId>
+            <artifactId>jansi</artifactId>
+            <version>2.4.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.CDAGaming</groupId>
+            <artifactId>DiscordIPC</artifactId>
+            <version>49a8d35df5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.pusher</groupId>
+            <artifactId>pusher-java-client</artifactId>
+            <version>2.4.4</version>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.21</version>
         </dependency>
+
+        <!-- Building JAR -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.3.0</version>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>uk.co.mistyknives.kickrpc.KickRPC</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

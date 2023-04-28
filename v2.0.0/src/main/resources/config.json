@@ -1,0 +1,8 @@
+{
+  "username": "{YOUR_USERNAME}",
+  "clientID": 1099615872777195530,
+  "displayElapsed": false,
+  "host": "{YOUR_WEBSOCKET_HOST}",
+  "port": 4455,
+  "password": "{YOUR_WEBSOCKET_PASSWORD}"
+}
