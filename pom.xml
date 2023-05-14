@@ -6,7 +6,7 @@
 
     <groupId>uk.co.mistyknives</groupId>
     <artifactId>KickRPC</artifactId>
-    <version>v3.0.1</version>
+    <version>v3.0.2</version>
 
     <properties>
         <maven.compiler.source>19</maven.compiler.source>
@@ -24,9 +24,8 @@
     <dependencies>
         <dependency>
             <groupId>com.github.MistyKnives</groupId>
-            <artifactId>kick4j</artifactId>
-            <version>84deee592d</version>
-            <scope>compile</scope>
+            <artifactId>Kick4J</artifactId>
+            <version>2b3b791772</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -72,6 +71,46 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jar-plugin</artifactId>
             <version>3.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.15.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.15.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.15.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <version>4.8.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.1-jre</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-firefox-driver</artifactId>
+            <version>4.8.3</version>
         </dependency>
     </dependencies>
 
