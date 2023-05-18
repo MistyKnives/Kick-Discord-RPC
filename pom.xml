@@ -6,7 +6,7 @@
 
     <groupId>uk.co.mistyknives</groupId>
     <artifactId>KickRPC</artifactId>
-    <version>v3.0.2</version>
+    <version>v4.0.0</version>
 
     <properties>
         <maven.compiler.source>19</maven.compiler.source>
@@ -22,21 +22,24 @@
     </repositories>
 
     <dependencies>
+        <!-- Http Request -->
         <dependency>
-            <groupId>com.github.MistyKnives</groupId>
-            <artifactId>Kick4J</artifactId>
-            <version>2b3b791772</version>
+            <groupId>co.casterlabs.Rakurai</groupId>
+            <artifactId>Json</artifactId>
+            <version>1.17.1</version>
+            <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>5.0.0-alpha.11</version>
+        </dependency>
+
+        <!-- Main Dependencies -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.26</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.fusesource.jansi</groupId>
-            <artifactId>jansi</artifactId>
-            <version>2.4.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -45,6 +48,8 @@
             <version>2.10.1</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- Discord/Kick Dependencies -->
         <dependency>
             <groupId>com.github.CDAGaming</groupId>
             <artifactId>DiscordIPC</artifactId>
@@ -55,62 +60,22 @@
             <artifactId>pusher-java-client</artifactId>
             <version>2.4.4</version>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.21</version>
-        </dependency>
 
-        <!-- Building JAR -->
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <version>3.5.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.3.0</version>
-        </dependency>
+        <!-- GUI Design -->
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
             <version>3.1.1</version>
         </dependency>
         <dependency>
+            <groupId>org.sonatype.sisu</groupId>
+            <artifactId>sisu-guice</artifactId>
+            <version>2.1.7</version>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
             <version>2.15.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>2.15.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.15.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.15.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-api</artifactId>
-            <version>4.8.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>31.1-jre</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-firefox-driver</artifactId>
-            <version>4.8.3</version>
         </dependency>
     </dependencies>
 
@@ -123,7 +88,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>uk.co.mistyknives.kickrpc.KickRPC</mainClass>
+                            <mainClass>uk.co.mistyknives.process.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

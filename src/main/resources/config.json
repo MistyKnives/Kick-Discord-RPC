@@ -1,4 +1,5 @@
 {
   "username": "{YOUR_USERNAME}",
-  "displayElapsed": false
+  "displayElapsed": false,
+  "discordClientID": "1099615872777195530"
 }

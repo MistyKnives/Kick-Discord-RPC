@@ -1,22 +1,27 @@
 package uk.co.mistyknives.kickrpc;
 
 import com.google.common.base.Objects;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
 import com.jagrosh.discordipc.entities.RichPresence;
+
 import com.pusher.client.Pusher;
 import com.pusher.client.PusherOptions;
 import com.pusher.client.channel.PusherEvent;
 import com.pusher.client.connection.ConnectionEventListener;
 import com.pusher.client.connection.ConnectionState;
 import com.pusher.client.connection.ConnectionStateChange;
+
 import lombok.SneakyThrows;
+
 import uk.co.mistyknives.kick4j.Kick4J;
 import uk.co.mistyknives.kick4j.livestream.Livestream;
 import uk.co.mistyknives.kick4j.livestream.trees.LivestreamCategory;
 import uk.co.mistyknives.kick4j.streamer.Streamer;
 import uk.co.mistyknives.kick4j.user.User;
-import uk.co.mistyknives.kickrpc.KickRPC;
+
 import uk.co.mistyknives.kickrpc.discord.DiscordClient;
 import uk.co.mistyknives.kickrpc.logging.Log;
 import uk.co.mistyknives.kickrpc.util.Config;

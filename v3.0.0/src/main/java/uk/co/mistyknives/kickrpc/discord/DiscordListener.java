@@ -7,6 +7,8 @@ import com.jagrosh.discordipc.IPCListener;
 import com.jagrosh.discordipc.entities.Packet;
 import com.jagrosh.discordipc.entities.User;
 
+import uk.co.mistyknives.kickrpc.logging.Log;
+
 /**
  * Copyright MistyKnives © 2022-2023
  * <br>
@@ -39,7 +41,7 @@ public class DiscordListener implements IPCListener {
 
     @Override
     public void onReady(IPCClient ipcClient) {
-        System.out.println("Logged in as %s#%s".formatted(ipcClient.getCurrentUser().getName(), ipcClient.getCurrentUser().getDiscriminator()));
+        Log.info("Logged in as %s#%s".formatted(ipcClient.getCurrentUser().getName(), ipcClient.getCurrentUser().getDiscriminator()));
     }
 
     @Override

@@ -1,15 +1,16 @@
 package uk.co.mistyknives.kickrpc;
 
-import org.fusesource.jansi.AnsiConsole;
-import uk.co.mistyknives.kickrpc.discord.DiscordClient;
-import uk.co.mistyknives.kickrpc.logging.Log;
-import uk.co.mistyknives.kickrpc.popups.TimeElapsedPopup;
-import uk.co.mistyknives.kickrpc.popups.UsernamePopup;
-import uk.co.mistyknives.kickrpc.util.Config;
-import uk.co.mistyknives.kickrpc.util.UpdateCheck;
+import com.jagrosh.discordipc.IPCClient;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import com.jagrosh.discordipc.entities.RichPresence;
+import com.pusher.client.Pusher;
+
+import uk.co.mistyknives.kickrpc.discord.DiscordClient;
+import uk.co.mistyknives.kickrpc.guis.ConfigureGUI;
+import uk.co.mistyknives.kickrpc.pusher.PusherClient;
+
+import uk.co.mistyknives.kickrpc.tray.*;
+import uk.co.mistyknives.kickrpc.util.*;
 
 /**
  * Copyright MistyKnives © 2022-2023
@@ -24,69 +25,139 @@ import java.awt.event.ActionListener;
  * <br>
  * https://github.com/MistyKnives
  */
-public class KickRPC {
+public class KickRPC implements IKickRPC {
 
-    private static Config config;
+    private static KickRPC instance;
 
-    private static DiscordClient discordClient;
+    public Config config;
 
-    private static KickAPI kickAPI;
+    public IPCClient discordClient;
+    public DiscordClient discordBackend;
 
-    private static UsernamePopup usernamePopup;
-    private static TimeElapsedPopup timeElapsedPopup;
+    public Pusher pusherClient;
+    public PusherClient pusherBackend;
 
-    public static void main(String[] args) {
-        if(Config.isAlreadySetup()) {
-            setup();
-            return;
-        }
+    public ConfigureGUI configGUI;
 
-        usernamePopup = new UsernamePopup();
-        usernamePopup.getButton().addActionListener(e -> {
-            if(usernamePopup.getTextField().getText().equalsIgnoreCase("")) {
-                usernamePopup.getButton().setEnabled(true);
-                return;
-            }
+    private SystemTrayInterface systemTray;
 
-            timeElapsedPopup = new TimeElapsedPopup();
-            timeElapsedPopup.getButton().addActionListener(e1 -> {
-                Config.save(new Config(usernamePopup.getUsername(), timeElapsedPopup.isValue()));
-                setup();
-            });
-        });
-    }
+    private boolean discordSetup = false, pusherSetup = false;
 
-    private static void setup() {
-        System.setProperty("webdriver.firefox.logfile", "/dev/null");
+    @Override
+    public KickRPC setup() throws Exception {
+        instance = this;
 
-        Thread shutdownHook = new Thread(AnsiConsole::systemUninstall);
+        CustomTheme.setup();
+
+        config = Config.load();
+        configGUI = new ConfigureGUI();
+
+        Thread shutdownHook = new Thread(this::shutdown);
         Runtime.getRuntime().addShutdownHook(shutdownHook);
 
-        Log.info(" ");
-        System.out.println("\n   ██╗  ██╗██╗ ██████╗██╗  ██╗     ██████╗ ██████╗  ██████╗\n" +
-                "   ██║ ██╔╝██║██╔════╝██║ ██╔╝     ██╔══██╗██╔══██╗██╔════╝\n" +
-                "   █████╔╝ ██║██║     █████╔╝█████╗██████╔╝██████╔╝██║     \n" +
-                "   ██╔═██╗ ██║██║     ██╔═██╗╚════╝██╔══██╗██╔═══╝ ██║     \n" +
-                "   ██║  ██╗██║╚██████╗██║  ██╗     ██║  ██║██║     ╚██████╗\n" +
-                "   ╚═╝  ╚═╝╚═╝ ╚═════╝╚═╝  ╚═╝     ╚═╝  ╚═╝╚═╝      ╚═════╝\n");
+        if(Config.isAlreadySetup()) {
+            load();
+            return this;
+        }
 
-        boolean latest = UpdateCheck.isLatest();
-        if(!latest) Log.error("Your KickRPC is not up to date (%s), please update it if you want the latest features!".formatted(UpdateCheck.getLatest()));
+        configGUI.setVisible(true);
 
-        config = Config.setup();
-
-        discordClient = new DiscordClient();
-        discordClient.setup();
-
-        kickAPI = new KickAPI();
-        kickAPI.setup();
+        return this;
     }
 
-    public static Config getConfig() {
-        return config;
+    @Override
+    public KickRPC load() throws Exception {
+        // Update config again just in case it's been updated
+        config = Config.load();
+
+        systemTray = SystemTrayFactory.createSystemTray();
+        systemTray.addTrayIcon(SystemTrayFactory.getIcon(), "KickRPC v4.0.0");
+
+        if(UpdateCheck.isLatest()) systemTray.displayMessage("Out of Date", "%s is no longer supported\nPlease consider updating!".formatted(UpdateCheck.latest));
+
+        // Discord
+        this.discordBackend = new DiscordClient();
+        this.discordBackend.setup();
+        this.discordClient = this.discordBackend.getClient();
+
+        // Pusher
+        this.pusherBackend = new PusherClient();
+        this.pusherBackend.setup();
+        this.pusherClient = this.pusherBackend.getClient();
+
+        if(discordSetup && pusherSetup) {
+            systemTray.displayMessage("Configuration", "Pusher: Connected\n" +
+                            "Discord: " +
+                            discordClient.getCurrentUser().getName() + "#" +
+                            discordClient.getCurrentUser().getDiscriminator() + "\n\n" +
+                            "Ready to Detect Your Stream!");
+        }
+
+        this.pusherBackend.checkIfLive();
+
+        return this;
     }
 
-    public static DiscordClient getDiscordClient() {
-        return discordClient;
+    @Override
+    public void shutdown() {
+        // Discord
+        discordBackend.shutdown();
+
+        // Pusher
+        pusherBackend.shutdown();
+
+        systemTray.removeTrayIcon();
+
+        Config.save(this.getConfig());
+
+        Runtime.getRuntime().halt(1);
+    }
+
+    public static KickRPC getInstance() {
+        return instance;
+    }
+
+    @Override
+    public Config getConfig() {
+        return this.config;
+    }
+
+    @Override
+    public Config updateConfig(Config newConfig) {
+        this.config = newConfig;
+        return Config.save(newConfig);
+    }
+
+    @Override
+    public IPCClient getDiscord() {
+        return this.discordClient;
+    }
+
+    @Override
+    public DiscordClient getDiscordBackend() {
+        return discordBackend;
+    }
+
+    @Override
+    public Pusher getPusher() {
+        return this.pusherClient;
+    }
+
+    @Override
+    public PusherClient getPusherBackend() {
+        return this.pusherBackend;
+    }
+
+    @Override
+    public SystemTrayInterface getSystemTray() {
+        return systemTray;
+    }
+
+    public void setDiscordSetup(boolean discordSetup) {
+        this.discordSetup = discordSetup;
+    }
+
+    public void setPusherSetup(boolean pusherSetup) {
+        this.pusherSetup = pusherSetup;
     }
 }

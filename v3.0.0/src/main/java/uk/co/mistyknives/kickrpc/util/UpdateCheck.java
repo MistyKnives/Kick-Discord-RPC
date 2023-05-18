@@ -22,19 +22,25 @@ import java.util.Scanner;
  */
 public class UpdateCheck {
 
-    public static String latest = "";
-
     public static boolean isLatest() {
         try {
-            URL url = new URL("https://mistyknives.co.uk/projects/kickrpc/version");
+            URL url = new URL("https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/version.txt");
             URLConnection connection = url.openConnection();
-            String version = new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine();
-
-            latest = version;
-            return version.equalsIgnoreCase("v4.0.0");
+            return new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine().equalsIgnoreCase("v3.0.0");
         } catch (IOException ex) {
             ex.printStackTrace();
             return false;
+        }
+    }
+
+    public static String getLatest() {
+        try {
+            URL url = new URL("https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/version.txt");
+            URLConnection connection = url.openConnection();
+            return new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
         }
     }
 }

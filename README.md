@@ -1,28 +1,28 @@
 # Kick-Discord-RPC
 A Simple Java Program to display your Kick Livestream on your Discord Profile!
 
-Download available in the [Releases Page](https://github.com/MistyKnives/Kick-Discord-RPC/releases/tag/3.0.1)
+Download available in the [Releases Page](https://github.com/MistyKnives/Kick-Discord-RPC/releases/tag/4.0.0)
 # Requirements
  * [Java](https://www.oracle.com/java/technologies/javase/jdk19-archive-downloads.html) - Version 19
- * [Firefox](https://www.mozilla.org/en-GB/firefox/new/) - Required to scrape the data from the Kick API without being cloudflare rate limited
- * JSON Editor - Literally Notepad will work
 # Getting Started
-1. Open the KickRPC.bat file (Make sure KickRPC.jar is inside the same Directory), this will check if you have Java 19 installed and will provide a link if you don't.
+1. Run the KickRPC.exe file.
    <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/run.png"></img>
-2. If it is your first time launching the program, these two popups will display
-   * Enter your Kick username for this one
-   
-   <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/first_launch_username.png"></img>
-   * This decides whether you want a timer displayed on your RPC displaying your stream time (From when the program detects your stream)
-   * 0 = Do not display time
-   * 1 = Display time
-   
-   <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/first_launch_display_stream_time.png"></img>
-3. After that you should be good to go and this should display if there are no issues.
-   <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/loaded.png"></img>
-4. This is what it will look like on your Profile:
+2. If it is your first time launching the program, this configuration panel will pop up. Configure it how it applies to you.
+   * Discord Client ID - If anyone is confused, this is to change "Live on Kick" to something else. You do not need to update this if you want to keep it the same.
+   <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/configuration_full.png"></img>
+3. After that you the program will run like normal. There will be a few notifications coming to your taskbar at the bottom right.
+   <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/program_loaded.png"></img>
+4. Once you are live, it will look like this
+   <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/rpc_loaded.png"></img>
+5. This is what it will look like on your Profile:
 
    <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/profile_without_time.png"></img>
    <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/profile_with_time.png"></img>
+
+# Settings
+ * To get to this popup, go to your taskbar at the bottom right. If there is no Kick icon then click the arrow facing up. You will see it in there. Right click it and select your desired option.
+
+<img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/popup.png"></img>
+
 # Errors
 If you receive any errors while testing my project, please don't be afraid to put them in the [Issues Section](https://github.com/MistyKnives/Kick-Discord-RPC/issues) as this will help me detect issues easier!

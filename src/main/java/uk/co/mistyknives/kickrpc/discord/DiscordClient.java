@@ -3,7 +3,7 @@ package uk.co.mistyknives.kickrpc.discord;
 import com.jagrosh.discordipc.IPCClient;
 import com.jagrosh.discordipc.exceptions.NoDiscordClientException;
 
-import uk.co.mistyknives.kickrpc.logging.Log;
+import uk.co.mistyknives.kickrpc.KickRPC;
 
 /**
  * Copyright MistyKnives © 2022-2023
@@ -20,13 +20,18 @@ import uk.co.mistyknives.kickrpc.logging.Log;
  */
 public class DiscordClient {
 
-    private static IPCClient ipcClient;
+    private IPCClient ipcClient;
+    private boolean isConnected;
 
     public void setup() {
         try {
-            ipcClient = new IPCClient(1099615872777195530L);
+            ipcClient = new IPCClient(Long.parseLong(KickRPC.getInstance().getConfig().getClientId()));
             ipcClient.setListener(new DiscordListener());
             ipcClient.connect();
+
+            isConnected = true;
+
+            KickRPC.getInstance().setDiscordSetup(true);
         } catch (NoDiscordClientException exception) {
             exception.printStackTrace();
         }
@@ -34,17 +39,36 @@ public class DiscordClient {
 
     public void clear(String message) {
         try {
-            ipcClient.close();
-            ipcClient = new IPCClient(1099615872777195530L);
+            if (ipcClient != null && isConnected) {
+                ipcClient.close();
+                ipcClient = null;
+                isConnected = false;
+            }
+
+            ipcClient = new IPCClient(Long.parseLong(KickRPC.getInstance().getConfig().getClientId()));
             ipcClient.connect();
 
-            Log.info(message);
+            isConnected = true;
+
+            System.out.println(message);
         } catch (NoDiscordClientException exception) {
-            Log.error(exception.getMessage());
+            exception.printStackTrace();
         }
     }
 
-    public static IPCClient getClient() {
+    public void shutdown() {
+        try {
+            if (ipcClient != null && isConnected) {
+                ipcClient.close();
+                ipcClient = null;
+                isConnected = false;
+            }
+        } catch (IllegalStateException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public IPCClient getClient() {
         return ipcClient;
     }
 }
