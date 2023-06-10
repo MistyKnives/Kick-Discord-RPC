@@ -1,9 +1,12 @@
 package uk.co.mistyknives.kickrpc.discord;
 
 import com.jagrosh.discordipc.IPCClient;
+import com.jagrosh.discordipc.entities.pipe.PipeStatus;
 import com.jagrosh.discordipc.exceptions.NoDiscordClientException;
 
 import uk.co.mistyknives.kickrpc.KickRPC;
+
+import javax.swing.*;
 
 /**
  * Copyright MistyKnives © 2022-2023
@@ -21,7 +24,6 @@ import uk.co.mistyknives.kickrpc.KickRPC;
 public class DiscordClient {
 
     private IPCClient ipcClient;
-    private boolean isConnected;
 
     public void setup() {
         try {
@@ -29,41 +31,32 @@ public class DiscordClient {
             ipcClient.setListener(new DiscordListener());
             ipcClient.connect();
 
-            isConnected = true;
-
             KickRPC.getInstance().setDiscordSetup(true);
-        } catch (NoDiscordClientException exception) {
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, "There was an error processing a request from '%s':\n%s\n \nPlease contact Misty#0666 on Discord for further assistance".formatted("Discord", exception.getMessage()), "KickRPC v4.0.0 - Error", JOptionPane.ERROR_MESSAGE);
+            KickRPC.getInstance().shutdown();
+
             exception.printStackTrace();
         }
     }
 
     public void clear(String message) {
-        try {
-            if (ipcClient != null && isConnected) {
-                ipcClient.close();
-                ipcClient = null;
-                isConnected = false;
-            }
+        this.shutdown();
+        this.setup();
 
-            ipcClient = new IPCClient(Long.parseLong(KickRPC.getInstance().getConfig().getClientId()));
-            ipcClient.connect();
-
-            isConnected = true;
-
-            System.out.println(message);
-        } catch (NoDiscordClientException exception) {
-            exception.printStackTrace();
-        }
+        System.out.println(message);
     }
 
     public void shutdown() {
         try {
-            if (ipcClient != null && isConnected) {
+            if(ipcClient != null && ipcClient.getStatus() == PipeStatus.CONNECTED) {
                 ipcClient.close();
                 ipcClient = null;
-                isConnected = false;
             }
-        } catch (IllegalStateException exception) {
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, "There was an error processing a request from '%s':\n%s\n\nPlease contact Misty#0666 on Discord for further assistance".formatted("Discord", exception.getMessage()), "KickRPC v4.0.0 - Error", JOptionPane.ERROR_MESSAGE);
+            KickRPC.getInstance().shutdown();
+
             exception.printStackTrace();
         }
     }

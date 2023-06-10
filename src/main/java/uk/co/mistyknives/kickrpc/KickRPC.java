@@ -2,7 +2,6 @@ package uk.co.mistyknives.kickrpc;
 
 import com.jagrosh.discordipc.IPCClient;
 
-import com.jagrosh.discordipc.entities.RichPresence;
 import com.pusher.client.Pusher;
 
 import uk.co.mistyknives.kickrpc.discord.DiscordClient;
@@ -73,7 +72,7 @@ public class KickRPC implements IKickRPC {
         systemTray = SystemTrayFactory.createSystemTray();
         systemTray.addTrayIcon(SystemTrayFactory.getIcon(), "KickRPC v4.0.0");
 
-        if(UpdateCheck.isLatest()) systemTray.displayMessage("Out of Date", "%s is no longer supported\nPlease consider updating!".formatted(UpdateCheck.latest));
+        if(!UpdateCheck.isLatest()) systemTray.displayMessage("Out of Date", "%s is no longer supported\nPlease consider updating!".formatted(UpdateCheck.latest));
 
         // Discord
         this.discordBackend = new DiscordClient();
@@ -101,10 +100,10 @@ public class KickRPC implements IKickRPC {
     @Override
     public void shutdown() {
         // Discord
-        discordBackend.shutdown();
+        if(this.discordBackend != null) discordBackend.shutdown();
 
         // Pusher
-        pusherBackend.shutdown();
+        if(this.pusherBackend != null) pusherBackend.shutdown();
 
         systemTray.removeTrayIcon();
 

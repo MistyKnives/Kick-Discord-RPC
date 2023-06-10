@@ -37,7 +37,7 @@ public class Config {
             Gson gson = new GsonBuilder().create();
             return gson.fromJson(reader, Config.class);
         } catch (IOException e) {
-            System.err.println("Failed to read the JSON file: " + e.getMessage());
+
             return null;
         }
     }

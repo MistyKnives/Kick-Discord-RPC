@@ -94,11 +94,11 @@ public class ConfigureGUI extends JFrame {
             Config.save(new Config(username, discordClientId, displayStreamTime));
             setVisible(false);
 
-            KickRPC.getInstance().getDiscordBackend().shutdown();
-            KickRPC.getInstance().getPusherBackend().shutdown();
+            if(KickRPC.getInstance().getDiscordBackend() != null) KickRPC.getInstance().getDiscordBackend().shutdown();
+            if(KickRPC.getInstance().getPusherBackend() != null) KickRPC.getInstance().getPusherBackend().shutdown();
 
             try {
-                KickRPC.getInstance().load();
+                KickRPC.getInstance().setup();
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }

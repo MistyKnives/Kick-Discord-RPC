@@ -3,6 +3,7 @@ package uk.co.mistyknives.kickrpc.pusher;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.inject.internal.util.Objects;
+import com.jagrosh.discordipc.entities.Callback;
 import com.jagrosh.discordipc.entities.RichPresence;
 import com.pusher.client.*;
 import com.pusher.client.channel.PusherEvent;
@@ -18,6 +19,7 @@ import uk.co.mistyknives.kickrpc.util.api.impl.livestream.tree.LivestreamCategor
 import uk.co.mistyknives.kickrpc.util.api.impl.streamer.Streamer;
 import uk.co.mistyknives.kickrpc.util.api.impl.user.User;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -92,7 +94,8 @@ public class PusherClient {
             }
             @Override
             public void onError(String message, String code, Exception e) {
-                System.out.println("Connection error");
+                JOptionPane.showMessageDialog(null, "There was an error processing a request from '%s':\n%s\n \nPlease contact Misty#0666 on Discord for further assistance".formatted("Pusher", e.getMessage()), "KickRPC v4.0.0 - Error", JOptionPane.ERROR_MESSAGE);
+                KickRPC.getInstance().shutdown();
             }
         }, ConnectionState.ALL);
 
@@ -115,48 +118,52 @@ public class PusherClient {
         this.holdThread.start();
     }
 
-    @SneakyThrows
     private void onEvent(PusherEvent event) {
         String type = event.getEventName();
 
-        switch (type) {
-            case "App\\Events\\StreamerIsLive":
-                user = KickAPI.getUser(config.getUsername());
-                Streamer streamer = KickAPI.getStreamer(user.getUsername());
-                livestream = streamer.getLivestream();
+        try {
+            switch (type) {
+                case "App\\Events\\StreamerIsLive":
+                    user = KickAPI.getUser(config.getUsername());
+                    Streamer streamer = KickAPI.getStreamer(user.getUsername());
+                    livestream = streamer.getLivestream();
 
-                if(livestream == null) return;
+                    if (livestream == null) return;
 
-                LivestreamCategory category = livestream.getCategories().stream().findFirst().get();
+                    LivestreamCategory category = livestream.getCategories().stream().findFirst().get();
 
-                JsonObject buttonObj = new JsonObject();
-                buttonObj.addProperty("label", "Watch");
-                buttonObj.addProperty("url", "https://kick.com/" + user.getUsername());
-                JsonArray buttons = new JsonArray();
-                buttons.add(buttonObj);
+                    JsonObject buttonObj = new JsonObject();
+                    buttonObj.addProperty("label", "Watch");
+                    buttonObj.addProperty("url", "https://kick.com/" + user.getUsername());
+                    JsonArray buttons = new JsonArray();
+                    buttons.add(buttonObj);
 
-                RichPresence.Builder builder = new RichPresence.Builder()
-                        .setState("Playing %s".formatted(category.getName()))
-                        .setDetails(livestream.getSessionTitle())
-                        .setLargeImage(livestream.getThumbnail().getUrl())
-                        .setStartTimestamp(config.getEnableStreamTime().equals("true") ? System.currentTimeMillis() : 0)
-                        .setButtons(buttons);
+                    RichPresence.Builder builder = new RichPresence.Builder()
+                            .setState("Playing %s".formatted(category.getName()))
+                            .setDetails(livestream.getSessionTitle())
+                            .setLargeImage(livestream.getThumbnail().getUrl())
+                            .setStartTimestamp(config.getEnableStreamTime().equals("true") ? System.currentTimeMillis() : 0)
+                            .setButtons(buttons);
 
-                KickRPC.getInstance().getDiscord().sendRichPresence(builder.build());
+                    KickRPC.getInstance().getDiscord().sendRichPresence(builder.build());
 
-                currentCategory = category.getName();
-                currentTitle = livestream.getSessionTitle();
+                    currentCategory = category.getName();
+                    currentTitle = livestream.getSessionTitle();
 
-                System.out.println("Updated Presence to: ");
-                System.out.println("Game     - " + currentCategory);
-                System.out.println("Title    - " + currentTitle);
+                    System.out.println("Updated Presence to: ");
+                    System.out.println("Game     - " + currentCategory);
+                    System.out.println("Title    - " + currentTitle);
 
-                KickRPC.getInstance().getSystemTray().displayMessage("Displaying Stream", "Title: %s\nGame: %s".formatted(currentTitle, currentCategory));
-                break;
-            case "App\\Events\\StopStreamBroadcast":
-                KickRPC.getInstance().getDiscordBackend().clear("Stopped Streaming, Clearing RPC");
-                KickRPC.getInstance().getSystemTray().displayMessage("Clearing Stream", "Stream no longer detected, clearing RPC.");
-                return;
+                    KickRPC.getInstance().getSystemTray().displayMessage("Displaying Stream", "Title: %s\nGame: %s".formatted(currentTitle, currentCategory));
+                    break;
+                case "App\\Events\\StopStreamBroadcast":
+                    KickRPC.getInstance().getDiscordBackend().clear("Stopped Streaming, Clearing RPC");
+                    KickRPC.getInstance().getSystemTray().displayMessage("Clearing Stream", "Stream no longer detected, clearing RPC.");
+                    return;
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "There was an error processing a request from '%s':\n%s\n \nPlease contact Misty#0666 on Discord for further assistance".formatted("Pusher", e.getMessage()), "KickRPC v4.0.0 - Error", JOptionPane.ERROR_MESSAGE);
+            KickRPC.getInstance().shutdown();
         }
     }
 
