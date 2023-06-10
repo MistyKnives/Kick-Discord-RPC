@@ -2,6 +2,7 @@ package uk.co.mistyknives.kickrpc.guis;
 
 import uk.co.mistyknives.kickrpc.KickRPC;
 import uk.co.mistyknives.kickrpc.util.Config;
+import uk.co.mistyknives.kickrpc.util.api.KickAPI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -98,6 +99,7 @@ public class ConfigureGUI extends JFrame {
             if(KickRPC.getInstance().getPusherBackend() != null) KickRPC.getInstance().getPusherBackend().shutdown();
 
             try {
+                if(KickRPC.getInstance().getSystemTray() != null) KickRPC.getInstance().getSystemTray().removeTrayIcon();
                 KickRPC.getInstance().setup();
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
