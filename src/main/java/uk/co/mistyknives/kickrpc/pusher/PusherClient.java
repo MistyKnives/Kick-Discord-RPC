@@ -78,7 +78,7 @@ public class PusherClient {
                         }
                 }
             }
-        }, 0, 30000);
+        }, 0, 60000 * 2);
     }
 
     public void setup() throws IOException {

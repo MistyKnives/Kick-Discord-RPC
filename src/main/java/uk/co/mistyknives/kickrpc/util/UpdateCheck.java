@@ -31,7 +31,7 @@ public class UpdateCheck {
             String version = new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine();
 
             latest = version;
-            return version.equalsIgnoreCase("v4.0.1");
+            return version.equalsIgnoreCase("v4.0.2");
         } catch (IOException ex) {
             ex.printStackTrace();
             return false;
