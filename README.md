@@ -1,9 +1,9 @@
 # Kick-Discord-RPC
 A Simple Java Program to display your Kick Livestream on your Discord Profile!
 
-Download available in the [Releases Page](https://github.com/MistyKnives/Kick-Discord-RPC/releases/tag/4.0.0)
+Download available in the [Releases Page](https://github.com/MistyKnives/Kick-Discord-RPC/releases/tag/4.0.2)
 # Requirements
- * [Java](https://www.oracle.com/java/technologies/javase/jdk19-archive-downloads.html) - Version 19
+ * [Java](https://www.oracle.com/java/technologies/javase/jdk20-archive-downloads.html) - Version 20
 # Getting Started
 1. Run the KickRPC.exe file.
    <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/run.png"></img>
