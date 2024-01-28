@@ -27,6 +27,8 @@ public class SystemTrayFactory {
     public static SystemTrayInterface createSystemTray() {
         String system = System.getProperty("os.name").toLowerCase();
 
+        System.out.println(system);
+
         if (system.startsWith("win")) return new WindowsSystemTray();
         else throw new UnsupportedOperationException("System tray is not supported on this platform.");
     }

@@ -28,25 +28,26 @@ public class KickAPI {
 
     public static final OkHttpClient client = new OkHttpClient.Builder().addNetworkInterceptor((chain) -> chain.proceed(chain.request().newBuilder().removeHeader("Accept-Encoding").build())).build();
 
-    private static final String BASE_URL = "https://mistyknives.co.uk/api/v1";
-
     public static User getUser(String username) throws IOException {
-        String response = sendHttpRequest(new Request.Builder().url("%s/user/%s".formatted(BASE_URL, username)), "user", username);
+        String response = sendHttpRequest("user", username);
         return Rson.DEFAULT.fromJson(response, User.class);
     }
 
     public static Streamer getStreamer(String username) throws IOException {
-        String response = sendHttpRequest(new Request.Builder().url("%s/channels/%s".formatted(BASE_URL, username)), "streamer", username);
+        String response = sendHttpRequest("streamer", username);
         return Rson.DEFAULT.fromJson(response, Streamer.class);
     }
 
-    private static String sendHttpRequest(@NonNull Request.Builder builder, String type, String username) throws IOException {
+    private static String sendHttpRequest(String type, String username) throws IOException {
+        Request.Builder builder = null;
+
+        switch(type) {
+            case "streamer" -> builder = new Request.Builder().url("https://kick.com/api/v1/channels/" + username);
+            case "user"     -> builder = new Request.Builder().url("https://kick.com/api/v1/users/" + username);
+        }
+
         try (Response response = client.newCall(builder.build()).execute()) {
             if(response.code() != 200) {
-                switch(type) {
-                    case "streamer" -> builder = new Request.Builder().url("https://kick.com/api/v1/channels/" + username);
-                    case "user"     -> builder = new Request.Builder().url("https://kick.com/api/v1/users/" + username);
-                }
 
                 try (Response updatedResponse = client.newCall(builder.build()).execute()) {
                     return updatedResponse.body().string();

@@ -1,10 +1,11 @@
 package uk.co.mistyknives.kickrpc.discord;
 
 import com.jagrosh.discordipc.IPCClient;
+import com.jagrosh.discordipc.entities.DiscordBuild;
 import com.jagrosh.discordipc.entities.pipe.PipeStatus;
-import com.jagrosh.discordipc.exceptions.NoDiscordClientException;
 
 import uk.co.mistyknives.kickrpc.KickRPC;
+import uk.co.mistyknives.kickrpc.util.UpdateCheck;
 
 import javax.swing.*;
 
@@ -27,16 +28,16 @@ public class DiscordClient {
 
     public void setup() {
         try {
-            ipcClient = new IPCClient(Long.parseLong(KickRPC.getInstance().getConfig().getClientId()));
+            ipcClient = new IPCClient(Long.parseLong(KickRPC.getInstance().getConfig().getClientId()), true, true);
             ipcClient.setListener(new DiscordListener());
-            ipcClient.connect();
+            ipcClient.connect(DiscordBuild.STABLE, DiscordBuild.PTB, DiscordBuild.CANARY);
 
             KickRPC.getInstance().setDiscordSetup(true);
         } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, "There was an error processing a request from '%s':\n%s\n \nPlease contact Misty#0666 on Discord for further assistance".formatted("Discord", exception.getMessage()), "KickRPC v4.0.0 - Error", JOptionPane.ERROR_MESSAGE);
-            KickRPC.getInstance().shutdown();
-
             exception.printStackTrace();
+
+            JOptionPane.showMessageDialog(null, "There was an error processing a request from '%s':\n%s\n \nPlease contact Misty#0666 on Discord for further assistance".formatted("Discord", exception.getMessage()), "KickRPC " + UpdateCheck.getVersion() + " - Error", JOptionPane.ERROR_MESSAGE);
+            KickRPC.getInstance().shutdown();
         }
     }
 
@@ -54,10 +55,10 @@ public class DiscordClient {
                 ipcClient = null;
             }
         } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, "There was an error processing a request from '%s':\n%s\n\nPlease contact Misty#0666 on Discord for further assistance".formatted("Discord", exception.getMessage()), "KickRPC v4.0.0 - Error", JOptionPane.ERROR_MESSAGE);
-            KickRPC.getInstance().shutdown();
-
             exception.printStackTrace();
+
+            JOptionPane.showMessageDialog(null, "There was an error processing a request from '%s':\n%s\n\nPlease contact Misty#0666 on Discord for further assistance".formatted("Discord", exception.getMessage()), "KickRPC " + UpdateCheck.getVersion() + " - Error", JOptionPane.ERROR_MESSAGE);
+            KickRPC.getInstance().shutdown();
         }
     }
 

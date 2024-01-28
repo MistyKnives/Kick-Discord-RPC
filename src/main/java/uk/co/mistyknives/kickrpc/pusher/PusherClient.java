@@ -3,13 +3,10 @@ package uk.co.mistyknives.kickrpc.pusher;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.inject.internal.util.Objects;
-import com.jagrosh.discordipc.entities.Callback;
 import com.jagrosh.discordipc.entities.RichPresence;
 import com.pusher.client.*;
 import com.pusher.client.channel.PusherEvent;
 import com.pusher.client.connection.*;
-
-import lombok.*;
 
 import uk.co.mistyknives.kickrpc.*;
 import uk.co.mistyknives.kickrpc.util.*;
@@ -94,7 +91,7 @@ public class PusherClient {
             }
             @Override
             public void onError(String message, String code, Exception e) {
-                JOptionPane.showMessageDialog(null, "There was an error processing a request from '%s':\n%s\n \nPlease contact Misty#0666 on Discord for further assistance".formatted("Pusher", e.getMessage()), "KickRPC v4.0.0 - Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "There was an error processing a request from '%s':\n%s\n \nPlease contact Misty#0666 on Discord for further assistance".formatted("Pusher", e.getMessage()), "KickRPC " + UpdateCheck.getVersion() + " - Error", JOptionPane.ERROR_MESSAGE);
                 KickRPC.getInstance().shutdown();
             }
         }, ConnectionState.ALL);
@@ -162,7 +159,7 @@ public class PusherClient {
                     return;
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "There was an error processing a request from '%s':\n%s\n \nPlease contact Misty#0666 on Discord for further assistance".formatted("Pusher", e.getMessage()), "KickRPC v4.0.0 - Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "There was an error processing a request from '%s':\n%s\n \nPlease contact Misty#0666 on Discord for further assistance".formatted("Pusher", e.getMessage()), "KickRPC " + UpdateCheck.getVersion() + " - Error", JOptionPane.ERROR_MESSAGE);
             KickRPC.getInstance().shutdown();
         }
     }

@@ -4,6 +4,7 @@ import com.jagrosh.discordipc.IPCClient;
 
 import com.pusher.client.Pusher;
 
+import lombok.Getter;
 import uk.co.mistyknives.kickrpc.discord.DiscordClient;
 import uk.co.mistyknives.kickrpc.guis.ConfigureGUI;
 import uk.co.mistyknives.kickrpc.pusher.PusherClient;
@@ -26,6 +27,7 @@ import uk.co.mistyknives.kickrpc.util.*;
  */
 public class KickRPC implements IKickRPC {
 
+    @Getter
     private static KickRPC instance;
 
     public Config config;
@@ -51,10 +53,14 @@ public class KickRPC implements IKickRPC {
         config = Config.load();
         configGUI = new ConfigureGUI();
 
+        systemTray = SystemTrayFactory.createSystemTray();
+        systemTray.addTrayIcon(SystemTrayFactory.getIcon(), "KickRPC v4.0.2");
+
         Thread shutdownHook = new Thread(this::shutdown);
         Runtime.getRuntime().addShutdownHook(shutdownHook);
 
         if(Config.isAlreadySetup()) {
+            System.out.println("config is already loaded!");
             load();
             return this;
         }
@@ -69,10 +75,7 @@ public class KickRPC implements IKickRPC {
         // Update config again just in case it's been updated
         config = Config.load();
 
-        systemTray = SystemTrayFactory.createSystemTray();
-        systemTray.addTrayIcon(SystemTrayFactory.getIcon(), "KickRPC v4.0.0");
-
-        if(!UpdateCheck.isLatest()) systemTray.displayMessage("Out of Date", "%s is no longer supported\nPlease consider updating!".formatted(UpdateCheck.latest));
+        if(UpdateCheck.isLatest("4.0.2", UpdateCheck.getLatestVersion())) systemTray.displayMessage("Out of Date", "%s is no longer supported\nPlease consider updating!".formatted(UpdateCheck.getVersion()));
 
         // Discord
         this.discordBackend = new DiscordClient();
@@ -110,10 +113,6 @@ public class KickRPC implements IKickRPC {
         Config.save(this.getConfig());
 
         Runtime.getRuntime().halt(1);
-    }
-
-    public static KickRPC getInstance() {
-        return instance;
     }
 
     @Override

@@ -2,12 +2,12 @@ package uk.co.mistyknives.kickrpc.guis;
 
 import uk.co.mistyknives.kickrpc.KickRPC;
 import uk.co.mistyknives.kickrpc.util.Config;
+import uk.co.mistyknives.kickrpc.util.UpdateCheck;
 import uk.co.mistyknives.kickrpc.util.api.KickAPI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,16 +41,16 @@ public class ConfigureGUI extends JFrame {
     private JLabel streamTimeTextLabel, fakeStreamTimeLabel;
     private JComboBox<String> streamTimeDropdown;
 
-    private JPanel buttonPanel;
     private JButton saveButton;
 
     public ConfigureGUI() {
-        setTitle("KickRPC v4.0.0 - Configuration");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("KickRPC v4.0.2 - Configuration");
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         initComponents();
 
         setLayout(new BorderLayout());
+        addListeners();
         addComponents();
 
         pack();
@@ -129,5 +129,23 @@ public class ConfigureGUI extends JFrame {
         mainPanel.add(saveButton);
 
         add(mainPanel);
+    }
+
+    public void addListeners() {
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                KickRPC.getInstance().shutdown();
+            }
+        });
+
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_F4 && (e.getModifiers() & KeyEvent.ALT_MASK) != 0) {
+                    KickRPC.getInstance().shutdown();
+                }
+            }
+        });
     }
 }
