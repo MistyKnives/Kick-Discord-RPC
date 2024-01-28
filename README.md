@@ -5,20 +5,18 @@ Download available in the [Releases Page](https://github.com/MistyKnives/Kick-Di
 # Requirements
  * [Java](https://www.oracle.com/java/technologies/javase/jdk20-archive-downloads.html) - Version 20
 # Getting Started
-1. Run the KickRPC.exe file.
+1. Run the KickRPC.exe file.<br>
    <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/run.png"></img>
 2. If it is your first time launching the program, this configuration panel will pop up. Configure it how it applies to you.
-   * Discord Client ID - If anyone is confused, this is to change "Live on Kick" to something else. You do not need to update this if you want to keep it the same.
-   <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/configuration_full.png"></img>
+   * Discord Client ID - If anyone is confused, this is to change "Live on Kick" to something else. You do not need to update this if you want to keep it the same.<br>
+<img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/configuration_full.png"></img>
 3. After that you the program will run like normal. There will be a few notifications coming to your taskbar at the bottom right.
    <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/program_loaded.png"></img>
-4. Once you are live, it will look like this
+4. Once you are live, it will look like this<br>
    <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/rpc_loaded.png"></img>
-5. This is what it will look like on your Profile:
-
-   <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/profile_without_time.png"></img>
-   <img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/profile_with_time.png"></img>
-
+5. This is what it will look like on your Profile:<br>
+<img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/profile_without_time.png"></img>
+<img src="https://raw.githubusercontent.com/MistyKnives/Kick-Discord-RPC/main/images/profile_with_time.png"></img>
 # Settings
  * To get to this popup, go to your taskbar at the bottom right. If there is no Kick icon then click the arrow facing up. You will see it in there. Right click it and select your desired option.
 
