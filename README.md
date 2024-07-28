@@ -1,4 +1,5 @@
 # Kick-Discord-RPC
+<strong>Project is no longer maintained.</strong><br>
 A Simple Java Program to display your Kick Livestream on your Discord Profile!
 
 Download available in the [Releases Page](https://github.com/MistyKnives/Kick-Discord-RPC/releases/tag/4.0.2)
